@@ -18,18 +18,22 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/insert', function() {
-    $user = User::findOrFail(1);
+Route::get('/insert/{id}', function($id) {
+    $user = User::findOrFail($id);
 
     $address = new Adress(['name' => 'Muzicescu 21 B']);
 
     $user->adress()->save($address);
+
+    return "A new adress has been inserted succesfully!!!";
 });
 
-Route::get('/update', function (){
-   $adress = Adress::where('user_id', '1')->first();
+Route::get('/update/{id}', function ($id){
+   $adress = Adress::where('user_id', $id)->first();
    $adress->name = 'New updated name';
    $adress->save();
+
+   return "Update has been done with success!!!";
 });
 
 Route::get('/read', function (){
@@ -41,4 +45,6 @@ Route::get('/read', function (){
 Route::get('/delete/{id}', function ($id) {
     $user = User::findOrFail($id);
     $user->delete();
+
+    return "Deleting has been successfully!!!";
 });
